@@ -14,6 +14,14 @@
 		<input type="hidden" name="command" value="logout"/>
 		<input type="submit" value="LogOut"/>
 	</form>
+	
+	<h4>Menu</h4>
+	<a href="controller?command=go_to_add_station">Add station</a>
+	<a href="#">Add train</a>
+	<a href="#">Show all train</a>
+	<a href="#">Find train</a>
+	
+	
 
 </body>
 </html>

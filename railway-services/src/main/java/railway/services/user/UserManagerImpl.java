@@ -50,7 +50,7 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			userDao.add(user);
 		} catch (SQLException e) {
-			RailwayLogger.logError(getClass(), e.getSQLState());
+			RailwayLogger.logError(UserManagerImpl.class, "asdfgsadfsdf");
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}	
 	}
@@ -91,6 +91,7 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			user = userDao.authentication(credential);
 		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			//ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 			e.printStackTrace();
 		}

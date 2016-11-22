@@ -1,4 +1,4 @@
-package railway.web.commands.guest;
+package railway.web.commands.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

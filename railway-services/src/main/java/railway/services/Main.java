@@ -3,9 +3,12 @@
 //import java.beans.PropertyVetoException;
 //import java.sql.SQLException;
 //
+//import railway.dba.dao.IBaseDao;
+//import railway.dba.dao.station.StationDaoImpl;
 //import railway.dba.dao.user.IUserDao;
 //import railway.dba.dao.user.UserDaoImpl;
 //import railway.entities.Schedule;
+//import railway.entities.Station;
 //import railway.entities.Train;
 //import railway.entities.User;
 //import railway.entities.models.Credential;
@@ -19,15 +22,15 @@
 //	public static void main(String[] args) throws SQLException, PropertyVetoException {
 //		
 //		
-//		IUserManager u = new UserManagerImpl();
-//		Credential credential = new Credential("qweqwe", "qweqwe");
-//		User users = u.authentication(credential);
-//		System.out.println(users);
-//		
-//		IUserManager u2 = new UserManagerImpl();
-//		credential = new Credential("Efimka", "8814281");
-//		User users2 = u2.authentication(credential);
-//		System.out.println(users2);
+////		IUserManager u = new UserManagerImpl();
+////		Credential credential = new Credential("wolthrax1", "8814281max");
+////		User users = u.authentication(credential);
+////		System.out.println(users);
+////		
+////		IUserManager u2 = new UserManagerImpl();
+////		credential = new Credential("Efimka", "8814281");
+////		User users2 = u2.authentication(credential);
+////		System.out.println(users2);
 //		
 //
 ////		IBaseDao<User, Long> dao = new UserDaoImpl();
@@ -46,7 +49,7 @@
 //		
 ////		IBaseDao<Station, Long> dao = new StationDaoImpl();
 ////		Station s = new Station();
-////		s.setName("Minsk");
+////		s.setName("Mosty");
 ////		
 ////		dao.add(s);
 //		
@@ -69,13 +72,13 @@
 //		schedule.setDepatureTime("2016-11-12 22:30");
 //		schedule.setArrivalTime("2016-11-12 23:30");
 //		schedule.setDepatureStation(String.valueOf(1));
-//		schedule.setArrivalStation(String.valueOf(3));
+//		schedule.setArrivalStation(String.valueOf());
 //		train.setPlaces(100);
 //		train.setPrice(34.34);
 //		train.setSchedule(schedule);
 //		
 //		m.addTrain(train);
-//		//System.out.println("Created train with id: " + trainId);
+//		System.out.println("Created train with id: ");
 //		
 //		
 ////		SiutableScheduleModel s = new SiutableScheduleModel();

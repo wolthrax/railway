@@ -11,10 +11,10 @@ import com.mysql.jdbc.Statement;
 import railway.dba.dao.BaseDaoImpl;
 import railway.dba.enums.ColumnNames;
 import railway.dba.utils.ConnectionPool;
-import railway.dba.utils.Queries;
 import railway.entities.User;
 import railway.entities.enums.UserRole;
 import railway.entities.models.Credential;
+import railway.utils.props.RailwayProps;
 
 public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 
@@ -26,7 +26,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 	public List<User> getAll() throws SQLException{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("get_all_users"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_all_users"));
 		ResultSet result = statement.executeQuery();
 		
 		List<User> userList = new ArrayList<>();
@@ -55,7 +55,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 	public User get(Long PK) throws SQLException{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("get_user_by_id"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_user_by_id"));
 		statement.setLong(1, PK);
 		
 		ResultSet result = statement.executeQuery();
@@ -83,7 +83,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 	public Long add(User user) throws SQLException {
 		
 		connection = ConnectionPool.getInstatce().getConnection();
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("add_user"),
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.add_user"),
 				Statement.RETURN_GENERATED_KEYS);
 		
 		statement.setString(1, user.getLogin());
@@ -109,7 +109,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 	public void update(User updatedUser) throws SQLException {
 		
 		connection = ConnectionPool.getInstatce().getConnection();
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("get_user_by_id"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_user_by_id"));
 		statement.setLong(1, updatedUser.getId());
 		
 		ResultSet result = statement.executeQuery();
@@ -141,7 +141,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 		
 		statement.clearParameters();
 		
-		statement = connection.prepareStatement(Queries.getQuery("update_user"));
+		statement = connection.prepareStatement(RailwayProps.getProperty("query.update_user"));
 		statement.setString(1, user.getPassword());
 		statement.setString(2, user.getName());
 		statement.setString(3, user.getSurname());
@@ -160,7 +160,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("check_for_uniqueness"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.check_for_uniqueness"));
 		statement.setString(1, login);
 		
 		ResultSet result = statement.executeQuery();
@@ -174,7 +174,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("authentication"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.authentication"));
 		statement.setString(1, credential.getLogin());
 		statement.setString(2, credential.getPassword());
 		

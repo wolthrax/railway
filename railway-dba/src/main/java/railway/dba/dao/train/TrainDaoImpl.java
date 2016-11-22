@@ -11,10 +11,10 @@ import com.mysql.jdbc.Statement;
 import railway.dba.dao.BaseDaoImpl;
 import railway.dba.enums.ColumnNames;
 import railway.dba.utils.ConnectionPool;
-import railway.dba.utils.Queries;
 import railway.entities.Schedule;
 import railway.entities.Train;
 import railway.entities.models.SiutableScheduleModel;
+import railway.utils.props.RailwayProps;
 
 public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 	
@@ -33,7 +33,7 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("add_schedule"), 
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.add_schedule"), 
 				Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, train.getSchedule().getDepatureTime());
 		statement.setString(2, train.getSchedule().getArrivalTime());
@@ -47,7 +47,7 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		
 		statement.clearParameters();
 		
-		statement = connection.prepareStatement(Queries.getQuery("add_train"),
+		statement = connection.prepareStatement(RailwayProps.getProperty("query.add_train"),
 				Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, train.getPlaces());
 		statement.setDouble(2, train.getPrice());
@@ -69,7 +69,7 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("get_needful_trains"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_needful_trains"));
 		statement.setString(1, model.getDepatureTime());
 		statement.setLong(2, Long.valueOf(model.getDepatureStation()));
 		statement.setLong(3, Long.valueOf(model.getArrivalStation()));

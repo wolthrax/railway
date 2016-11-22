@@ -11,8 +11,8 @@ import com.mysql.jdbc.Statement;
 import railway.dba.dao.BaseDaoImpl;
 import railway.dba.enums.ColumnNames;
 import railway.dba.utils.ConnectionPool;
-import railway.dba.utils.Queries;
 import railway.entities.Station;
+import railway.utils.props.RailwayProps;
 
 public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStationDao{
 	
@@ -25,7 +25,7 @@ public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStati
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("add_station"),
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.add_station"),
 				Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, station.getName());
 		statement.executeUpdate();
@@ -46,7 +46,7 @@ public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStati
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(Queries.getQuery("get_all_stations"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_all_stations"));
 		ResultSet result = statement.executeQuery();
 		List<Station> stationList = new ArrayList<>();
 		

@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	<h3>USer MAIN</h3><br><br>
+	<h3>User MAIN 2222</h3><br><br>
 	
 	<form action="controller" method="POST">
 		<input type="hidden" name="command" value="logout"/>

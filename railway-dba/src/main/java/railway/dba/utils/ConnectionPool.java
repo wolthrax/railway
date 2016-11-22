@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import railway.utils.props.RailwayProps;
 // c3p0
 public class ConnectionPool{
 	
@@ -14,18 +16,18 @@ public class ConnectionPool{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO com.mysql.jdbc.Driver not found ...
+			
 		}
 		cpds = new ComboPooledDataSource();
-		cpds.setJdbcUrl(DBProperties.getProperty("db.url"));
-		cpds.setUser(DBProperties.getProperty("db.user"));
+		cpds.setJdbcUrl(RailwayProps.getProperty("db.url"));
+		cpds.setUser(RailwayProps.getProperty("db.user"));
 		
-		cpds.setPassword(DBProperties.getProperty("db.password"));
+		cpds.setPassword(RailwayProps.getProperty("db.password"));
 		
-		cpds.setMinPoolSize(Integer.valueOf(DBProperties.getProperty("pool.min_pool_size")));
-        cpds.setAcquireIncrement(Integer.valueOf(DBProperties.getProperty("pool.acquire_increment")));
-        cpds.setMaxPoolSize(Integer.valueOf(DBProperties.getProperty("pool.max_pool_size")));
-        cpds.setMaxStatements(Integer.valueOf(DBProperties.getProperty("pool.max_statements")));
+		cpds.setMinPoolSize(Integer.valueOf(RailwayProps.getProperty("db.pool.min_pool_size")));
+        cpds.setAcquireIncrement(Integer.valueOf(RailwayProps.getProperty("db.pool.acquire_increment")));
+        cpds.setMaxPoolSize(Integer.valueOf(RailwayProps.getProperty("db.pool.max_pool_size")));
+        cpds.setMaxStatements(Integer.valueOf(RailwayProps.getProperty("db.pool.max_statements")));
         
 	}
 	
@@ -42,7 +44,6 @@ public class ConnectionPool{
 			connection = this.cpds.getConnection();
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
-			System.out.println("*****error");
 			e.printStackTrace();
 		}
 		return connection;	

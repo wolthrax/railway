@@ -9,6 +9,7 @@ import railway.dba.dao.train.TrainDaoImpl;
 import railway.dba.utils.ConnectionPool;
 import railway.entities.Train;
 import railway.entities.models.SiutableScheduleModel;
+import railway.utils.logger.RailwayLogger;
 
 public class TrainManagerImpl implements ITrainManager{
 
@@ -19,6 +20,7 @@ public class TrainManagerImpl implements ITrainManager{
 		try {
 			trainDao.add(train);
 		} catch (SQLException e) {
+			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
 		}
 	}
