@@ -8,7 +8,7 @@ import railway.entities.models.TrainModel;
 
 public interface ITrainManager {
 	
-	void addTrain(TrainModel trainModel);
+	long addTrain(TrainModel trainModel);
 	List<Train> getSiutableTrains(SiutableScheduleModel model);
 
 }

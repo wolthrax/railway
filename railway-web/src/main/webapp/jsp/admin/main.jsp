@@ -15,11 +15,15 @@
 		<input type="submit" value="LogOut"/>
 	</form>
 	
+	<h5>${message}</h5>
+	
 	<h4>Menu</h4>
 	<a href="controller?command=go_to_add_station">Add station</a><br>
 	<a href="controller?command=go_to_add_train">Add train</a><br>
 	<a href="#">Show all train</a><br>
 	<a href="#">Find train</a><br>
+	
+	<h4>${message}</h4>
 	
 	
 

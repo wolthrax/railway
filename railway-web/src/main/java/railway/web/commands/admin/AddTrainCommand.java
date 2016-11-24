@@ -30,15 +30,14 @@ public class AddTrainCommand extends AbstractCommand{
 		Map<String,String> errors = trainValidator.getErrorMap(trainModel);
 		
 		if(errors.isEmpty()){
-			trainManager.addTrain(trainModel);
-		}else{
-			
-			
+			long id = trainManager.addTrain(trainModel);
+			if(id > 0)
+				request.setAttribute("message", RailwayProps.getProperty("mess.train ") + " id: " + id);
+			else request.setAttribute("message", RailwayProps.getProperty("mess.error.train"));
+			return RailwayProps.getProperty("page.admin.main");
+		}else{		
 			request.setAttribute("errors", errors);
-			return RailwayProps.getProperty("page.admin.add_train");
+			return RailwayProps.getProperty("page.admin.go_to_add_train");
 		}
-		
-		return RailwayProps.getProperty("page.index");
 	}
-
 }

@@ -16,7 +16,7 @@ import railway.utils.logger.RailwayLogger;
 public class TrainManagerImpl implements ITrainManager{
 
 	@Override
-	public void addTrain(TrainModel trainModel) {
+	public long addTrain(TrainModel trainModel) {
 		
 		IBaseDao<Train, Long> trainDao = new TrainDaoImpl();
 		
@@ -32,11 +32,12 @@ public class TrainManagerImpl implements ITrainManager{
 		train.setSchedule(schedule);
 		
 		try {
-			trainDao.add(train);
+			return trainDao.add(train);
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
 			e.printStackTrace();
+			return -1;
 		}
 	}
 
