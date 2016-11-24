@@ -12,8 +12,8 @@ public class StationValidator extends Validator{
 		
 		Map<String, String> errorMap = new HashMap<>();
 		
-		if(checkRegexp(station.getName()))
-			errorMap.put("name", RailwayProps.getProperty("mess.error.station_name"));
+		if(checkRegexp(station.getName(), RailwayProps.getProperty("regex.station.name")))
+			errorMap.put("name", RailwayProps.getProperty("mess.error.station.name"));
 		
 		return errorMap;
 	}

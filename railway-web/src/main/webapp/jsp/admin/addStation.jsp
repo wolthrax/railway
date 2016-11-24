@@ -8,9 +8,9 @@
 </head>
 <body>
 
-	<form action="controller" method="post">
+	<form action="controller" method="POST">
 		<input type="hidden" name="command" value="add_station"/>
-		Station name:<input type="text" name="station">${name}
+		Station name:<input type="text" name="station">${errors["name"]}<br>
 		<input type="submit" value="Add station"/>
 	</form>
 

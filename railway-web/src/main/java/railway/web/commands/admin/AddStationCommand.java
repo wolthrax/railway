@@ -27,7 +27,7 @@ public class AddStationCommand extends AbstractCommand{
 		if(errors.isEmpty()){
 			stationManager.addStation(station);
 		}else{
-			request.setAttribute("name", errors.get("name"));
+			request.setAttribute("errors", errors);
 			return RailwayProps.getProperty("page.admin.add_station");
 		}
 		

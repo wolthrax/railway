@@ -2,7 +2,9 @@ package railway.web.commands.factory;
 
 import railway.web.commands.Command;
 import railway.web.commands.admin.AddStationCommand;
-import railway.web.commands.admin.GoToAddStation;
+import railway.web.commands.admin.AddTrainCommand;
+import railway.web.commands.admin.GoToAddStationCommand;
+import railway.web.commands.admin.GoToAddTrainCommand;
 import railway.web.commands.common.GoToRegistrationCommand;
 import railway.web.commands.common.LoginCommand;
 import railway.web.commands.common.LogoutCommand;
@@ -13,11 +15,12 @@ public enum CommandType {
 	// User commands
 	BOOK_A_TICKET,
 	SHOW_ALL_TICKETS,
-	GO_TO_ADD_STATION,
 	// ...
 	
 	// Admin commands
+	GO_TO_ADD_TRAIN,
 	ADD_TRAIN,
+	GO_TO_ADD_STATION,
 	ADD_STATION,
 	SHOW_PASSENGERS,
 	// ...
@@ -50,7 +53,13 @@ public enum CommandType {
 				return new AddStationCommand();
 				
 			case GO_TO_ADD_STATION:
-				return new GoToAddStation();
+				return new GoToAddStationCommand();
+				
+			case GO_TO_ADD_TRAIN:
+				return new GoToAddTrainCommand();
+				
+			case ADD_TRAIN:
+				return new AddTrainCommand();
 		
 		}
 		

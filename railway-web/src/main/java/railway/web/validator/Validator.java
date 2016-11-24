@@ -3,14 +3,12 @@ package railway.web.validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import railway.utils.props.RailwayProps;
-
 public class Validator {
 
-	boolean checkRegexp(String str){
+	boolean checkRegexp(String value, String regex){
 		
-		Pattern pattern = Pattern.compile(RailwayProps.getProperty("regex.station.name"));
-		Matcher matcher = pattern.matcher(str);
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(value);
 		
 		return !matcher.matches();
 	}

@@ -16,10 +16,10 @@
 	</form>
 	
 	<h4>Menu</h4>
-	<a href="controller?command=go_to_add_station">Add station</a>
-	<a href="#">Add train</a>
-	<a href="#">Show all train</a>
-	<a href="#">Find train</a>
+	<a href="controller?command=go_to_add_station">Add station</a><br>
+	<a href="controller?command=go_to_add_train">Add train</a><br>
+	<a href="#">Show all train</a><br>
+	<a href="#">Find train</a><br>
 	
 	
 
