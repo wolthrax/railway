@@ -7,8 +7,10 @@ import railway.dba.dao.IBaseDao;
 import railway.dba.dao.user.IUserDao;
 import railway.dba.dao.user.UserDaoImpl;
 import railway.dba.utils.ConnectionPool;
+import railway.entities.Train;
 import railway.entities.User;
 import railway.entities.models.Credential;
+import railway.entities.models.InfoForTicketModel;
 import railway.utils.logger.RailwayLogger;
 
 public class UserManagerImpl implements IUserManager{
@@ -43,16 +45,18 @@ public class UserManagerImpl implements IUserManager{
 	}
 
 	@Override
-	public void addUser(User user) {
+	public long addUser(User user) {
 		
 		IBaseDao<User, Long> userDao = new UserDaoImpl();
 		
 		try {
-			userDao.add(user);
+			long id = userDao.add(user);
+			return id;
 		} catch (SQLException e) {
-			RailwayLogger.logError(UserManagerImpl.class, "asdfgsadfsdf");
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
-		}	
+			return -1;
+		}
 	}
 
 	@Override
@@ -92,10 +96,39 @@ public class UserManagerImpl implements IUserManager{
 			user = userDao.authentication(credential);
 		} catch (SQLException e) {
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
-			//ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
-			e.printStackTrace();
+			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}
 		
 		return user;
+	}
+
+	@Override
+	public int bookATicket(InfoForTicketModel infoForTicketModel) {
+		
+		IUserDao userDao = new UserDaoImpl();
+		
+		try {
+			userDao.bookATicket(infoForTicketModel);
+		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			return -1;
+		}
+		return 0;
+	}
+
+	@Override
+	public List<Train> getAllTickets(long userId) {
+		IUserDao userDao = new UserDaoImpl();
+		
+		List<Train> trainList = null;
+		
+		try {
+			trainList = userDao.getAllTickets(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
+		}
+		return trainList;
 	}
 }

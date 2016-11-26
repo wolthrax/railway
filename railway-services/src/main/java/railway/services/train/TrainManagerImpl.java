@@ -9,6 +9,7 @@ import railway.dba.dao.train.TrainDaoImpl;
 import railway.dba.utils.ConnectionPool;
 import railway.entities.Schedule;
 import railway.entities.Train;
+import railway.entities.User;
 import railway.entities.models.SiutableScheduleModel;
 import railway.entities.models.TrainModel;
 import railway.utils.logger.RailwayLogger;
@@ -36,7 +37,6 @@ public class TrainManagerImpl implements ITrainManager{
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
-			e.printStackTrace();
 			return -1;
 		}
 	}
@@ -49,8 +49,23 @@ public class TrainManagerImpl implements ITrainManager{
 		try {
 			siutableTrainList = trainDao.getSiutableTrains(model);
 		} catch (SQLException e) {
-			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
+			RailwayLogger.logError(getClass(), e.getMessage());
 		}
 		return siutableTrainList;
+	}
+
+	@Override
+	public List<User> getPassengers(long trainId) {
+
+		ITrainDao trainDao = new TrainDaoImpl();
+		
+		List<User> userList = null;
+		try {
+			userList = trainDao.getUsersByTrainId(trainId);
+		} catch (SQLException e) {
+			RailwayLogger.logError(getClass(), e.getMessage());
+		}
+		
+		return userList;
 	}
 }

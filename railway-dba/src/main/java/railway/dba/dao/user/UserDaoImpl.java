@@ -11,9 +11,12 @@ import com.mysql.jdbc.Statement;
 import railway.dba.dao.BaseDaoImpl;
 import railway.dba.enums.ColumnNames;
 import railway.dba.utils.ConnectionPool;
+import railway.entities.Schedule;
+import railway.entities.Train;
 import railway.entities.User;
 import railway.entities.enums.UserRole;
 import railway.entities.models.Credential;
+import railway.entities.models.InfoForTicketModel;
 import railway.utils.props.RailwayProps;
 
 public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
@@ -196,5 +199,65 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 		
 		ConnectionPool.getInstatce().closeConnection(connection);
 		return user;
+	}
+
+	@Override
+	public void bookATicket(InfoForTicketModel infoForTicketModel) throws SQLException {
+		
+		connection = ConnectionPool.getInstatce().getConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.add_ticket"));
+		statement.setLong(1, infoForTicketModel.getUserId());
+		statement.setLong(2, infoForTicketModel.getTrainId());
+		statement.setInt(3, infoForTicketModel.getPlace());
+		statement.executeUpdate();
+		
+		statement.clearParameters();
+		
+		statement = connection.prepareStatement(RailwayProps.getProperty("query.take_a_place"));
+		statement.setLong(1, infoForTicketModel.getTrainId());
+		statement.executeUpdate();
+		
+		statement.clearParameters();
+		
+		statement = connection.prepareStatement(RailwayProps.getProperty("query.take_a_money"));
+		statement.setDouble(1, infoForTicketModel.getPrice());
+		statement.setLong(2, infoForTicketModel.getUserId());
+		statement.executeUpdate();
+		
+		connection.commit();
+		ConnectionPool.getInstatce().closeConnection(connection);
+	}
+
+	@Override
+	public List<Train> getAllTickets(long idUser) throws SQLException {
+		
+		connection = ConnectionPool.getInstatce().getConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_all_tickets"));
+		statement.setLong(1, idUser);
+		
+		ResultSet result = statement.executeQuery();
+		
+		List<Train> trainList = new ArrayList<>();
+		while(result.next()){
+			Schedule schedule = new Schedule();
+			
+			schedule.setId(result.getLong(ColumnNames.SCHEDULE_ID.getColumnName()));
+			schedule.setDepatureTime(result.getString(ColumnNames.SCHEDULE_DEPATURE_TIME.getColumnName()));
+			schedule.setArrivalTime(result.getString(ColumnNames.SCHEDULE_ARRIVAL_TIME.getColumnName()));
+			schedule.setDepatureStation(result.getString(ColumnNames.SCHEDULE_DEPATURE_STATION.getColumnName()));
+			schedule.setArrivalStation(result.getString(ColumnNames.SCHEDULE_ARRIVAL_STATION.getColumnName()));
+			
+			Train train = new Train();
+			train.setId(result.getLong(ColumnNames.TRAIN_ID.getColumnName()));
+			train.setPlaces(result.getInt(ColumnNames.TICKET_PLACE.getColumnName()));
+			train.setPrice(result.getDouble(ColumnNames.TRAIN_PRICE.getColumnName()));
+			train.setSchedule(schedule);
+			
+			trainList.add(train);
+		}
+		
+		return trainList;
 	}
 }

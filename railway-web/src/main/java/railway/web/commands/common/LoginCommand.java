@@ -8,6 +8,7 @@ import railway.entities.enums.UserRole;
 import railway.entities.models.Credential;
 import railway.services.user.IUserManager;
 import railway.services.user.UserManagerImpl;
+import railway.utils.props.RailwayProps;
 import railway.web.commands.AbstractCommand;
 
 public class LoginCommand extends AbstractCommand{
@@ -22,19 +23,18 @@ public class LoginCommand extends AbstractCommand{
 				request.getParameter("password"));
 		
 		User user = userManager.authentication(credential);
-		System.out.println(user);
 		if(user != null){
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setAttribute("userRole", user.getRole());
 			
 			if(user.getRole() == UserRole.ADMIN)
-				page = "/jsp/admin/main.jsp";
+				page = RailwayProps.getProperty("page.admin.go_to_main");
 			if(user.getRole() == UserRole.USER)
-				page = "/jsp/user/main.jsp";
+				page = RailwayProps.getProperty("page.user.go_to_main");
 		}else {
-			request.setAttribute("message1", "Incorrect login or password");
-			page = "/index.jsp";
+			request.setAttribute("message", RailwayProps.getProperty("mess.error.credential"));
+			page = RailwayProps.getProperty("page.index");
 		}
 		
 		return page;

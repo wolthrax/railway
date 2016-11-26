@@ -13,6 +13,7 @@ import railway.dba.enums.ColumnNames;
 import railway.dba.utils.ConnectionPool;
 import railway.entities.Schedule;
 import railway.entities.Train;
+import railway.entities.User;
 import railway.entities.models.SiutableScheduleModel;
 import railway.utils.props.RailwayProps;
 
@@ -98,5 +99,30 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		ConnectionPool.getInstatce().closeConnection(connection);
 		
 		return trainList;
+	}
+
+	@Override
+	public List<User> getUsersByTrainId(long id) throws SQLException {
+		
+		connection = ConnectionPool.getInstatce().getConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_users_by_train_id"));
+		statement.setLong(1, id);
+		
+		ResultSet result = statement.executeQuery();
+		
+		List<User> userList = new ArrayList<>();
+		while(result.next()){
+			User user = new User();
+			user.setId(result.getLong(ColumnNames.USER_ID.getColumnName()));
+			user.setLogin(result.getString(ColumnNames.USER_LOGIN.getColumnName()));
+			user.setName(result.getString(ColumnNames.USER_NAME.getColumnName()));
+			user.setSurname(result.getString(ColumnNames.USER_SURNAME.getColumnName()));
+			user.setEmail(result.getString(ColumnNames.USER_EMAIL.getColumnName()));
+			user.setPhone(result.getString(ColumnNames.USER_PHONE.getColumnName()));
+			userList.add(user);
+		}
+		
+		return userList;
 	}
 }

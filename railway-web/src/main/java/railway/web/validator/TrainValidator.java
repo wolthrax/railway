@@ -15,7 +15,7 @@ public class TrainValidator extends Validator{
 		if(checkRegexp(trainModel.getPlaces(), RailwayProps.getProperty("regex.train.places")))
 			errorMap.put("places", RailwayProps.getProperty("mess.error.train.palces"));
 		
-		if(checkRegexp(trainModel.getPrice(), RailwayProps.getProperty("regex.train.places")))
+		if(checkRegexp(trainModel.getPrice(), RailwayProps.getProperty("regex.train.price")))
 			errorMap.put("price", RailwayProps.getProperty("mess.error.train.price"));
 		
 		if(checkRegexp(trainModel.getDepatureTime(), RailwayProps.getProperty("regex.schedule.time")))
@@ -24,11 +24,11 @@ public class TrainValidator extends Validator{
 		if(checkRegexp(trainModel.getArrivalTime(), RailwayProps.getProperty("regex.schedule.time")))
 			errorMap.put("arrival_time", RailwayProps.getProperty("mess.error.schedule.time"));
 		
-//		if(checkRegexp(trainModel.getDepatureStation(), RailwayProps.getProperty("regex.station.name")))
-//			errorMap.put("depature_station", RailwayProps.getProperty("mess.error.station.name"));
-//		
-//		if(checkRegexp(trainModel.getArrivalStation(), RailwayProps.getProperty("regex.station.name")))
-//			errorMap.put("arrival_station", RailwayProps.getProperty("mess.error.station.name"));
+		if(checkRegexp(trainModel.getDepatureStation(), RailwayProps.getProperty("regex.station.number")))
+			errorMap.put("depature_station", RailwayProps.getProperty("mess.error.station.name"));
+		
+		if(checkRegexp(trainModel.getArrivalStation(), RailwayProps.getProperty("regex.station.number")))
+			errorMap.put("arrival_station", RailwayProps.getProperty("mess.error.station.name"));
 		
 		return errorMap;	
 	}

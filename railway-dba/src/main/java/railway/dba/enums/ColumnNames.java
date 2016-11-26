@@ -14,6 +14,7 @@ public enum ColumnNames {
 	
 	TICKET_USER_ID("user_id"),
 	TICKET_TRAIN_ID("train_id"),
+	TICKET_PLACE("place"),
 	
 	TRAIN_ID("id"),
 	TRAIN_PLACES("places"),

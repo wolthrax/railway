@@ -25,7 +25,11 @@ public class AddStationCommand extends AbstractCommand{
 		Map<String,String> errors = stationValidator.getErrorMap(station);
 		
 		if(errors.isEmpty()){
-			stationManager.addStation(station);
+			long id = stationManager.addStation(station);
+			if(id > 0){
+				request.setAttribute("message", RailwayProps.getProperty("mess.station"));
+			} else request.setAttribute("message", RailwayProps.getProperty("mess.error.train"));
+			
 		}else{
 			request.setAttribute("errors", errors);
 			return RailwayProps.getProperty("page.admin.add_station");

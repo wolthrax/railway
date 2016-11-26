@@ -32,7 +32,7 @@ public class AddTrainCommand extends AbstractCommand{
 		if(errors.isEmpty()){
 			long id = trainManager.addTrain(trainModel);
 			if(id > 0)
-				request.setAttribute("message", RailwayProps.getProperty("mess.train ") + " id: " + id);
+				request.setAttribute("message", RailwayProps.getProperty("mess.train") + " id: " + id);
 			else request.setAttribute("message", RailwayProps.getProperty("mess.error.train"));
 			return RailwayProps.getProperty("page.admin.main");
 		}else{		

@@ -10,16 +10,16 @@
 	
 	<form action="controller" method="POST">
 		<input type="hidden" name="command" value="registration"/>
-		Login:<input type="text" name="login"/><br>
-		Password:<input type="text" name="password"/><br>
-		Name:<input type="text" name="name"/><br>
-		Surname:<input type="text" name="surname"/><br>
-		Email:<input type="text" name="email"/><br>
-		Phone:<input type="text" name="phone"/><br>
+		Login:<input type="text" name="login"/>${errors["login"]}<br>
+		Password:<input type="text" name="password"/>${errors["password"]}<br>
+		Name:<input type="text" name="name"/>${errors["name"]}<br>
+		Surname:<input type="text" name="surname"/>${errors["surname"]}<br>
+		Email:<input type="text" name="email"/>${errors["email"]}<br>
+		Phone:<input type="text" name="phone"/>${errors["phone"]}<br>
 		<input type="submit" value="Registration"/>
 	</form>
 	
-	<h4>${message2}</h4>
+	<h4>${message}</h4>
 
 </body>
 </html>

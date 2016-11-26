@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<script type="text/javascript" src="/railway/assets/js/validator.js"></script>
+<title>Index</title>
 </head>
 <body>
-	<form action="controller" method="POST">
+	<form action="controller" method="POST" name="form" onsubmit="return validate()">
 		<input type="hidden" name="command" value="login"/>
-		Login:<input type="text" name="login"/>
-		Password:<input type="text" name="password"/><br>
+		Login: <input type="text" name="login"> <span style='color:red' id="login"></span><br />
+		Password: <input type="text" name="password"> <span style='color:red' id="password"></span><br />
 		<input type="submit" value="LogIn"/>
 	</form>
 	
@@ -19,7 +20,7 @@
 		<input type="submit" value="Registration"/>
 	</form>
 	
-	<h4>${message1}</h4>
+	<h4>${message}</h4>
 
 </body>
 </html>

@@ -6,7 +6,7 @@ import railway.entities.Station;
 
 public interface IStationManager {
 
-	void addStation(Station station);
+	long addStation(Station station);
 	List<Station> getAllStations();
 	
 }

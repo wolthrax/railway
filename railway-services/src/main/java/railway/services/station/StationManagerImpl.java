@@ -14,13 +14,15 @@ public class StationManagerImpl implements IStationManager{
 	private IBaseDao<Station, Long> stationDao = new StationDaoImpl();
 
 	@Override
-	public void addStation(Station station) {
+	public long addStation(Station station) {
 		
 		try {
-			stationDao.add(station);
+			long id = stationDao.add(station);
+			return id;
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(stationDao.getConnection());
+			return -1;
 		}
 		
 	}
