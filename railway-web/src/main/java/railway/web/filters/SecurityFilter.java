@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import railway.entities.enums.UserRole;
 
-@WebFilter( urlPatterns = { "/jsp/admin/*" },
+@WebFilter( urlPatterns = { "/jsp/admin/*", "/jsp/user/*"},
 	initParams = { @WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
-public class AdminSecurityFilter implements Filter{
+public class SecurityFilter implements Filter{
 	
 	private String indexPath;
 	
@@ -37,12 +37,11 @@ public class AdminSecurityFilter implements Filter{
 		
 		UserRole role = (UserRole) session.getAttribute("userRole");
 		
-		if(role != UserRole.ADMIN){
-			httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);
-			return;
-		}
-		
-		chain.doFilter(request, response);
+		if(role == UserRole.ADMIN){
+			chain.doFilter(request, response);
+		}else if(role == UserRole.USER){
+			chain.doFilter(request, response);
+		}else httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);	
 	}
 
 	@Override

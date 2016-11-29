@@ -1,3 +1,54 @@
-#myform{
-	display: inline;
+body{
+	background-image: url("/railway/assets/img/background.jpg");
+	font-family: 'trebuchet MS', 'Lucida sans', Arial;
+    font-size: 14px;
 }
+
+span{
+	display: block;
+}
+
+#mainDiv{
+	position:relative;
+	display: block;
+	margin: 90px auto;
+	width: 1300px;
+	min-height: 480px;
+}
+
+#index{
+	display: block;
+	margin: 90px auto;
+	max-width: 295px;
+	min-width: 100px;
+	max-height: 500px;
+	min-height: 70px;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+}
+
+.errorMessage{
+	color: red;
+}
+
+#username{
+	padding: 10px;
+	background-color: #FFFFFF;
+	display: inline-block;
+	position: absolute;
+	width: 300px;
+	height: 80 px;
+	border-radius: 5px;
+}
+
+#menu{
+	padding: 10px;
+	background-color: #FFFFFF;
+	display: inline-block;
+	position: absolute;
+	top: 100px;
+	width: 300px;
+	height: 380 px;
+	border-radius: 5px;
+}
+
