@@ -20,10 +20,11 @@ public class FindTrainCommand extends AbstractCommand{
 		
 		ITrainManager trainManager = new TrainManagerImpl();
 		
-		SiutableScheduleModel siutableScheduleModel = new SiutableScheduleModel();
-		siutableScheduleModel.setDepatureStation(request.getParameter("depatureStation"));
-		siutableScheduleModel.setArrivalStation(request.getParameter("arrivalStation"));
-		siutableScheduleModel.setDepatureTime(request.getParameter("depatureTime"));
+		SiutableScheduleModel siutableScheduleModel = new SiutableScheduleModel(
+				request.getParameter("fromTime"),
+				request.getParameter("toTime"),
+				request.getParameter("depatureStation"),
+				request.getParameter("arrivalStation"));
 		
 		SiutableScheduleValidator validator = new SiutableScheduleValidator();
 		Map<String,String> errors = validator.getErrorMap(siutableScheduleModel);

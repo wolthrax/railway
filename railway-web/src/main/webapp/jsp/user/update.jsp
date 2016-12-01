@@ -9,20 +9,16 @@
 	<body>
 		<div id="index">
 			<form action="controller" method="POST">
-					<input type="hidden" name="command" value="registration"/>
+					<input type="hidden" name="command" value="update_user"/>
 					
 					<table align="center">
 						<tr>
-							<td>Login:</td>
-							<td><input type="text" name="login"/></td>
+							<td>Password:</td>
+							<td><input type="password" name="password1"/></td>
 						</tr>
 						<tr>
 							<td>Password:</td>
-							<td><input type="text" name="password1"/></td>
-						</tr>
-						<tr>
-							<td>Password:</td>
-							<td><input type="text" name="password2"/></td>
+							<td><input type="password" name="password2"/></td>
 						</tr>
 						<tr>
 							<td>Name:</td>
@@ -41,17 +37,16 @@
 							<td><input type="text" name="phone"/></td>
 						</tr>
 						<tr>
-							<td colspan="2" align="center"><input type="submit" value="Registration"/>	</td>
+							<td colspan="2" align="center"><input class="submitLarge" type="submit" value="Update profile"/></td>
 						</tr>
 					</table>
 			</form>
-			<span class="errorMessage">${errors["login"]}</span>
 			<span class="errorMessage">${errors["password"]}</span>
 			<span class="errorMessage">${errors["name"]}</span>
 			<span class="errorMessage">${errors["surname"]}</span>
 			<span class="errorMessage">${errors["email"]}</span>
 			<span class="errorMessage">${errors["phone"]}</span>
-			<span class="errorMessage">${message}</span>
+			<span>${message}</span>
 		</div>>
 	</body>
 </html>

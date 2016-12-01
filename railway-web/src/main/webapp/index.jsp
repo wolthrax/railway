@@ -8,12 +8,10 @@
 		<title>Index</title>
 	</head>
 	<body>
-
 		<div id="index">
-		
 			<form action="controller" method="POST" name="form" onsubmit="return validate()">
 				<input type="hidden" name="command" value="login"/>
-				<table>
+				<table align="center">
 					<tr>
 						<td valign="top">Login:</td>
 						<td><input type="text" name="login"></td>
@@ -21,25 +19,26 @@
 					
 					<tr>
 						<td valign="top">Password:</td>
-						<td><input type="text" name="password"></td>
+						<td><input type="password" name="password"></td>
 					</tr>
+					
+					<tr><td>&nbsp;</td></tr>
 				
 					<tr>
-						<td><input type="submit" value="LogIn"/></td>
+						<td colspan="2" align="center"><input class="submitLarge" type="submit" value="LogIn"/></td>
 					</tr>
-				</table>
-						
+				</table>	
 			</form>
-				<form action="controller" method="POST">
-					<table>
-						<tr>
-							<td>
-								<input type="hidden" name="command" value="go_to_registration"/>		
-								<input type="submit" value="Registration"/>
-							</td>
-						<tr>
-					</table>
-				</form>
+			<form action="controller" method="POST">
+				<table align="center">
+					<tr>
+						<td>
+							<input type="hidden" name="command" value="go_to_registration"/>		
+							<input type="submit" value="Registration"/>
+						</td>
+					<tr>
+				</table>
+			</form>
 			<span class="errorMessage" id="login"></span>
 			<span class="errorMessage" id="password"></span>
 			<span class="errorMessage">${message}</span>

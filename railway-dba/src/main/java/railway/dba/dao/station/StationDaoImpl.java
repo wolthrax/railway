@@ -62,4 +62,17 @@ public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStati
 		return stationList;
 	}
 
+	@Override
+	public long checkForUniqueness(String station) throws SQLException {
+		connection = ConnectionPool.getInstatce().getConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.check_station_for_uniqueness"));
+		statement.setString(1, station);
+		
+		ResultSet result = statement.executeQuery();
+		result.next();
+		
+		return result.getLong(1);
+	}
+
 }

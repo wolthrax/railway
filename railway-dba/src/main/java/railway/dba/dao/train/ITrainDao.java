@@ -12,5 +12,6 @@ public interface ITrainDao extends IBaseDao<Train, Long>{
 	
 	List<Train> getSiutableTrains(SiutableScheduleModel model) throws SQLException;
 	List<User> getUsersByTrainId(long id) throws SQLException;
+	void deleteTrains() throws SQLException;
 
 }

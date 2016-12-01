@@ -25,10 +25,13 @@ public class TrainValidator extends Validator{
 			errorMap.put("arrival_time", RailwayProps.getProperty("mess.error.schedule.time"));
 		
 		if(checkRegexp(trainModel.getDepatureStation(), RailwayProps.getProperty("regex.station.number")))
-			errorMap.put("depature_station", RailwayProps.getProperty("mess.error.station.name"));
+			errorMap.put("depature_station", RailwayProps.getProperty("mess.error.station.depature_station_name"));
 		
 		if(checkRegexp(trainModel.getArrivalStation(), RailwayProps.getProperty("regex.station.number")))
-			errorMap.put("arrival_station", RailwayProps.getProperty("mess.error.station.name"));
+			errorMap.put("arrival_station", RailwayProps.getProperty("mess.error.station.arrival_station_name"));
+		
+		if(trainModel.getArrivalStation().equals(trainModel.getDepatureStation()))
+			errorMap.put("station_repeated", RailwayProps.getProperty("mess.error.station.name.repeated"));
 		
 		return errorMap;	
 	}

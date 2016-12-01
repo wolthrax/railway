@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import railway.dba.dao.IBaseDao;
+import railway.dba.dao.station.IStationDao;
 import railway.dba.dao.station.StationDaoImpl;
 import railway.dba.utils.ConnectionPool;
 import railway.entities.Station;
@@ -34,10 +35,24 @@ public class StationManagerImpl implements IStationManager{
 		try {
 			stations = stationDao.getAll();
 		} catch (SQLException e) {
+			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(stationDao.getConnection());
 		}
 		
 		return stations;
 	}
 
+	@Override
+	public long checkForUniqueness(String station) {
+		IStationDao userDao = new StationDaoImpl();
+		
+		long uniqueness = -1;
+		try {
+			uniqueness = userDao.checkForUniqueness(station);
+		} catch (SQLException e) {
+			RailwayLogger.logError(getClass(), e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+		}
+		return uniqueness;
+	}
 }

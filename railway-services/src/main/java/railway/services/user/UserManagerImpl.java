@@ -9,8 +9,10 @@ import railway.dba.dao.user.UserDaoImpl;
 import railway.dba.utils.ConnectionPool;
 import railway.entities.Train;
 import railway.entities.User;
+import railway.entities.enums.UserRole;
 import railway.entities.models.Credential;
 import railway.entities.models.InfoForTicketModel;
+import railway.entities.models.UserModel;
 import railway.utils.logger.RailwayLogger;
 
 public class UserManagerImpl implements IUserManager{
@@ -24,6 +26,7 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			userList = userDao.getAll();
 		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}
 		
@@ -39,15 +42,26 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			user = userDao.get(id);
 		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}
 		return user;
 	}
 
 	@Override
-	public long addUser(User user) {
+	public long addUser(UserModel userModel) {
 		
 		IBaseDao<User, Long> userDao = new UserDaoImpl();
+		
+		User user = new User();
+		user.setLogin(userModel.getLogin());
+		user.setPassword(userModel.getPassword1());
+		user.setName(userModel.getName());
+		user.setSurname(userModel.getSurname());
+		user.setEmail(userModel.getEmail());
+		user.setPhone(userModel.getPhone());
+		user.setRole(UserRole.USER);
+		user.setMoney(0);
 		
 		try {
 			long id = userDao.add(user);
@@ -60,14 +74,36 @@ public class UserManagerImpl implements IUserManager{
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public byte updateUser(UserModel userModel) {
 		
 		IBaseDao<User, Long> userDao = new UserDaoImpl();
 		
 		try {
+			User user = userDao.get(userModel.getId());
+			if(!userModel.getPassword1().equals(""))
+				user.setPassword(userModel.getPassword1());
+			
+			if(!userModel.getName().equals(""))
+				user.setName(userModel.getName());
+			
+			if(!userModel.getSurname().equals(""))
+				user.setSurname(userModel.getSurname());
+			
+			if(!userModel.getEmail().equals(""))
+				user.setEmail(userModel.getEmail());
+			
+			if(!userModel.getPhone().equals(""))
+				user.setPhone(userModel.getPhone());
+			
+			if(!userModel.getMoney().equals(""))
+				user.setMoney(Double.valueOf(userModel.getMoney()));
+			
 			userDao.update(user);
+			return 0;
 		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			return -1;
 		}
 		
 	}
@@ -81,6 +117,7 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			uniqueness = userDao.checkForUniqueness(login);
 		} catch (SQLException e) {
+			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}
 		
@@ -126,8 +163,8 @@ public class UserManagerImpl implements IUserManager{
 		try {
 			trainList = userDao.getAllTickets(userId);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
 		}
 		return trainList;
 	}

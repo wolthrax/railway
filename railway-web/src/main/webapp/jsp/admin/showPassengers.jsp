@@ -5,6 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="/railway/assets/css/table.css" />
+		<link rel="stylesheet" type="text/css" href="/railway/assets/css/style.css" />
 		<title>Show passengers</title>
 	</head>
 	<body>

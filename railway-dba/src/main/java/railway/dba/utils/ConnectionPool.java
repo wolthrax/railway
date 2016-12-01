@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import railway.utils.logger.RailwayLogger;
 import railway.utils.props.RailwayProps;
 // c3p0
 public class ConnectionPool{
@@ -44,7 +45,7 @@ public class ConnectionPool{
 			connection = this.cpds.getConnection();
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			RailwayLogger.logError(getClass(), e.getMessage());
 		}
 		return connection;	
 	}
@@ -54,7 +55,7 @@ public class ConnectionPool{
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				RailwayLogger.logError(getClass(), e.getMessage());
 			}
 		}
 	}
@@ -65,7 +66,7 @@ public class ConnectionPool{
 				connection.rollback();
 				connection.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				RailwayLogger.logError(getClass(), e.getMessage());
 			}
 		}
 	}

@@ -18,24 +18,31 @@ public class AddStationCommand extends AbstractCommand{
 		
 		IStationManager stationManager = new StationManagerImpl();
 		
-		Station station = new Station();
-		station.setName(request.getParameter("station"));
+		long uniqueStationName = stationManager.checkForUniqueness(request.getParameter("station"));
 		
-		StationValidator stationValidator = new StationValidator();
-		Map<String,String> errors = stationValidator.getErrorMap(station);
-		
-		if(errors.isEmpty()){
-			long id = stationManager.addStation(station);
-			if(id > 0){
-				request.setAttribute("message", RailwayProps.getProperty("mess.station"));
-			} else request.setAttribute("message", RailwayProps.getProperty("mess.error.train"));
+		if(uniqueStationName == 0){
+			Station station = new Station();
+			station.setName(request.getParameter("station"));
 			
-		}else{
-			request.setAttribute("errors", errors);
+			StationValidator stationValidator = new StationValidator();
+			Map<String,String> errors = stationValidator.getErrorMap(station);
+			
+			if(errors.isEmpty()){
+				long id = stationManager.addStation(station);
+				if(id > 0){
+					request.setAttribute("message", RailwayProps.getProperty("mess.station"));
+				} else request.setAttribute("message", RailwayProps.getProperty("mess.error.station"));
+				
+			}else{
+				request.setAttribute("errors", errors);
+				return RailwayProps.getProperty("page.admin.add_station");
+			}
+		} else {
+			request.setAttribute("message", "Station with name " + 
+					"\"" + request.getParameter("station") + 
+					"\"" + " alredy exists.");
 			return RailwayProps.getProperty("page.admin.add_station");
 		}
-		
-		return RailwayProps.getProperty("page.admin.main");
+		return RailwayProps.getProperty("page.admin.go_to_main");
 	}
-
 }

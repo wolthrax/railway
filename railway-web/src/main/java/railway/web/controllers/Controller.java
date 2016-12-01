@@ -7,13 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import railway.utils.logger.RailwayLogger;
 import railway.web.commands.Command;
 import railway.web.commands.factory.CommandFactory;
+import railway.web.timers.DeleteTimerTrains;
 
 //@WebServlet("/controller")
 public class Controller extends HttpServlet{
 
 	static final long serialVersionUID = 1L;
+	Thread deleteTimerTrains;
+	
+	@Override
+	public void init() throws ServletException {
+		deleteTimerTrains = new Thread(new DeleteTimerTrains(30));
+		deleteTimerTrains.start();
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response){
@@ -32,11 +41,9 @@ public class Controller extends HttpServlet{
 		try {
 			request.getRequestDispatcher(page).forward(request, response);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			RailwayLogger.logError(getClass(), e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			RailwayLogger.logError(getClass(), e.getMessage());
 		}
 	}
 }

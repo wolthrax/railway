@@ -15,7 +15,7 @@
 			<form action="controller" method="POST">
 				<input type="hidden" name="command" value="add_train">
 				
-				<table>
+				<table align="center">
 					<tr>
 						<td>Places:</td>
 						<td><input type="text" name="places"></td>
@@ -56,7 +56,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" value="Add train"></td>
+						<td colspan="2" align="center"><input type="submit" value="Add train"></td>
 					</tr>
 				</table>
 			</form>
@@ -67,6 +67,7 @@
 			<span class="errorMessage">${errors["arrival_time"]}</span>
 			<span class="errorMessage">${errors["depature_station"]}</span>
 			<span class="errorMessage">${errors["arrival_station"]}</span>
+			<span class="errorMessage">${errors["station_repeated"]}</span>
 		</div>
 	</body>
 	

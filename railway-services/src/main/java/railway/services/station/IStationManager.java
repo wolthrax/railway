@@ -8,5 +8,6 @@ public interface IStationManager {
 
 	long addStation(Station station);
 	List<Station> getAllStations();
+	long checkForUniqueness(String station);
 	
 }

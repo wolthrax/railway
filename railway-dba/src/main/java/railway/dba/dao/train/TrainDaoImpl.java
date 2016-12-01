@@ -70,10 +70,11 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_needful_trains"));
-		statement.setString(1, model.getDepatureTime());
-		statement.setLong(2, Long.valueOf(model.getDepatureStation()));
-		statement.setLong(3, Long.valueOf(model.getArrivalStation()));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_siutable_trains"));
+		statement.setString(1, model.getFromTime());
+		statement.setString(2, model.getToTime());
+		statement.setLong(3, Long.valueOf(model.getDepatureStation()));
+		statement.setLong(4, Long.valueOf(model.getArrivalStation()));
 		
 		ResultSet result = statement.executeQuery();
 		
@@ -97,7 +98,6 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 		}
 		
 		ConnectionPool.getInstatce().closeConnection(connection);
-		
 		return trainList;
 	}
 
@@ -123,6 +123,18 @@ public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 			userList.add(user);
 		}
 		
+		ConnectionPool.getInstatce().closeConnection(connection);
 		return userList;
+	}
+
+	@Override
+	public void deleteTrains() throws SQLException {
+		connection = ConnectionPool.getInstatce().getConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.delete_train"));
+		statement.executeUpdate();
+		
+		connection.commit();
+		ConnectionPool.getInstatce().closeConnection(connection);
 	}
 }

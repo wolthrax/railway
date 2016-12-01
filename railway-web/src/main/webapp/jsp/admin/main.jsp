@@ -28,7 +28,7 @@
 			
 			<!-- <h5>${message}</h5>  -->
 			<div class="divTable">
-				${messageTrain}
+				<p class="message">${message}</p>
 				<table class="bordered">
 				    <thead>
 					    <tr>
@@ -63,29 +63,34 @@
 		    </div>
 			
 			<div id="menu">
-				<h4>Menu</h4>
-				<a href="controller?command=go_to_add_station">Add station</a><br>
-				<a href="controller?command=go_to_add_train">Add train</a><br>
+				<div class="divLink" ><a href="controller?command=go_to_add_station">Add station</a></div>
+				<div class="divLink" ><a href="controller?command=go_to_add_train">Add train</a></div>
+				<br>
+				<h3 align="Center">Find train</h3>
 				
-				<h3>Find train</h3>
-				
-				<form action="controller" method="POST" style="display: inline-block;">
+				<form action="controller" method="POST">
 					<input type="hidden" name="command" value="find_train">
 					
-					<table>
+					<table align="center">
 						<tr>
-							<td>Depature time:</td>
-							<td><input type="text" name="depatureTime" class="datetimepicker_mask"></td>
+							<td>From:</td>
+							<td><input type="text" name="fromTime" class="datetimepicker_mask"></td>
+						</tr>
+						<tr>
+							<td>To:</td>
+							<td><input type="text" name="toTime" class="datetimepicker_mask"></td>
 						</tr>
 						<tr>
 							<td>Depature station:</td>
-							<td><select name="depatureStation">
+							<td>
+								<select name="depatureStation">
 						
 									<option value="0">!--Station--!</option>
 									<c:forEach var = "station" items ="${stationList}" varStatus= "loopIndex">	
 										<option value="${station.id}">${station.name}</option>
 									</c:forEach>
-							</select></td>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td>Arrival station:</td>
@@ -97,13 +102,14 @@
 							</select></td>
 						</tr>
 						<tr>
-							<td><input type="submit" value="get"></td>
+							<td colspan="2" align="center"><input type="submit" value="Find siutable trains"></td>
 						</tr>
 					</table>
 				</form>
-				<span>${errors["depature_time"]}</span>
-				<span>${errors["depature_station"]}</span>
-				<span>${errors["arrival_station"]}</span>
+				<span class="errorMessage">${errors["from_time"]}</span>
+				<span class="errorMessage">${errors["to_time"]}</span>
+				<span class="errorMessage">${errors["depature_station"]}</span>
+				<span class="errorMessage">${errors["arrival_station"]}</span>
 			</div>
 		</div>
 	</body>

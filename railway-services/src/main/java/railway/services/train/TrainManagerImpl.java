@@ -50,6 +50,7 @@ public class TrainManagerImpl implements ITrainManager{
 			siutableTrainList = trainDao.getSiutableTrains(model);
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
 		}
 		return siutableTrainList;
 	}
@@ -64,8 +65,22 @@ public class TrainManagerImpl implements ITrainManager{
 			userList = trainDao.getUsersByTrainId(trainId);
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
 		}
 		
 		return userList;
+	}
+
+	@Override
+	public void deleteTrains() {
+		
+		ITrainDao trainDao = new TrainDaoImpl();
+		
+		try {
+			trainDao.deleteTrains();
+		} catch (SQLException e) {
+			RailwayLogger.logError(getClass(), e.getMessage());
+			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
+		}
 	}
 }

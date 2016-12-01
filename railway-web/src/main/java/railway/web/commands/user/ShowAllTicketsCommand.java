@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import railway.entities.Train;
 import railway.entities.User;
+import railway.entities.enums.UserRole;
 import railway.services.user.IUserManager;
 import railway.services.user.UserManagerImpl;
 import railway.utils.props.RailwayProps;
@@ -16,16 +17,21 @@ public class ShowAllTicketsCommand extends AbstractCommand{
 	@Override
 	public String execute(HttpServletRequest request) {
 		
-		IUserManager userManager = new UserManagerImpl();
 		
 		User user = (User) request.getSession().getAttribute("user");
+		if(user != null)
+			if(user.getRole() == UserRole.USER){
 		
-		List<Train> trainList = userManager.getAllTickets(user.getId());
+				IUserManager userManager = new UserManagerImpl();
+				
+				List<Train> trainList = userManager.getAllTickets(user.getId());
+				
+				if(trainList.isEmpty()){
+					request.setAttribute("message", RailwayProps.getProperty("mess.ticket.no_tickets"));
+				} else request.setAttribute("trainList", trainList);
+				return RailwayProps.getProperty("page.user.show_tickets");
+		}
 		
-		if(trainList.isEmpty()){
-			request.setAttribute("message", RailwayProps.getProperty("mess.ticket.no_tickets"));
-		} else request.setAttribute("trainList", trainList);
-		
-		return RailwayProps.getProperty("page.user.show_tickets");
+		return RailwayProps.getProperty("page.index");
 	}
 }

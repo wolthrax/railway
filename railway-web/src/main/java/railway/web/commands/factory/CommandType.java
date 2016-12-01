@@ -14,8 +14,10 @@ import railway.web.commands.common.LogoutCommand;
 import railway.web.commands.common.RegistrationCommand;
 import railway.web.commands.user.BookATicketCommand;
 import railway.web.commands.user.GetSiutableTrainCommand;
+import railway.web.commands.user.GoToUpdateUserCommand;
 import railway.web.commands.user.GoToUserMainCommand;
 import railway.web.commands.user.ShowAllTicketsCommand;
+import railway.web.commands.user.UpdateUserCommnd;
 
 public enum CommandType {
 
@@ -24,6 +26,8 @@ public enum CommandType {
 	GET_SIUTABLE_TRAIN,
 	BOOK_A_TICKET,
 	SHOW_ALL_TICKETS,
+	UPDATE_USER,
+	GO_TO_UPDATE_USER,
 	// ...
 	
 	// Admin commands
@@ -34,17 +38,14 @@ public enum CommandType {
 	ADD_STATION,
 	FIND_TRAIN,
 	SHOW_PASSENGERS,
-	
 	// ...
 	
 	// Other commands
 	GO_TO_REGISTRATION,
 	REGISTRATION,
 	LOGIN,
-	LOGOUT,
-	SHOW_SIUTABLE_TRAIN;
+	LOGOUT;
 	
-	@SuppressWarnings("incomplete-switch")
 	public Command getCommnad(){
 		
 		switch(this){
@@ -93,10 +94,14 @@ public enum CommandType {
 				
 			case SHOW_ALL_TICKETS:
 				return new ShowAllTicketsCommand();
-		
+				
+			case GO_TO_UPDATE_USER:
+				return new GoToUpdateUserCommand();
+				
+			case UPDATE_USER:
+				return new UpdateUserCommnd();
+				
+			default: return new GoToRegistrationCommand();
 		}
-		
-		return null;	
 	}
-	
 }

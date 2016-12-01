@@ -26,8 +26,7 @@ public class GoToAdminMainCommand extends AbstractCommand{
 				List<Station> stationList = stationManager.getAllStations();
 				
 				request.setAttribute("stationList", stationList);
-				request.setAttribute("message", request.getParameter("message"));
-				
+				request.setAttribute("message", request.getAttribute("message"));
 				return RailwayProps.getProperty("page.admin.main");
 			}
 		return RailwayProps.getProperty("page.index");

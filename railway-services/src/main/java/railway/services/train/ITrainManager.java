@@ -12,5 +12,6 @@ public interface ITrainManager {
 	long addTrain(TrainModel trainModel);
 	List<Train> getSiutableTrains(SiutableScheduleModel model);
 	List<User> getPassengers(long trainId);
+	void deleteTrains();
 
 }

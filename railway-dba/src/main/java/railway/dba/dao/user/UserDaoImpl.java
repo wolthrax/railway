@@ -109,42 +109,11 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 	}
 	
 	@Override
-	public void update(User updatedUser) throws SQLException {
+	public void update(User user) throws SQLException {
 		
 		connection = ConnectionPool.getInstatce().getConnection();
-		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.get_user_by_id"));
-		statement.setLong(1, updatedUser.getId());
 		
-		ResultSet result = statement.executeQuery();
-		result.next();
-		
-		User user = new User();
-		user.setId(result.getLong(ColumnNames.USER_ID.getColumnName()));
-		user.setLogin(result.getString(ColumnNames.USER_LOGIN.getColumnName()));
-		user.setPassword(result.getString(ColumnNames.USER_PASSWORD.getColumnName()));
-		user.setName(result.getString(ColumnNames.USER_NAME.getColumnName()));
-		user.setSurname(result.getString(ColumnNames.USER_SURNAME.getColumnName()));
-		user.setEmail(result.getString(ColumnNames.USER_EMAIL.getColumnName()));
-		user.setPhone(result.getString(ColumnNames.USER_PHONE.getColumnName()));
-		user.setRole(UserRole.valueOf(result.getString(ColumnNames.USER_ROLE.getColumnName())));
-		user.setMoney(result.getDouble(ColumnNames.USER_MONEY.getColumnName()));
-		
-		if(updatedUser.getPassword() != null)
-			user.setPassword(updatedUser.getPassword());
-		if(updatedUser.getName() != null)
-			user.setName(updatedUser.getName());
-		if(updatedUser.getSurname() != null)
-			user.setSurname(updatedUser.getSurname());
-		if(updatedUser.getEmail() != null)	
-			user.setEmail(updatedUser.getEmail());
-		if(updatedUser.getPhone() != null)	
-			user.setPhone(updatedUser.getPhone());
-		if(updatedUser.getMoney() != 0)	
-			user.setMoney(updatedUser.getMoney());
-		
-		statement.clearParameters();
-		
-		statement = connection.prepareStatement(RailwayProps.getProperty("query.update_user"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.update_user"));
 		statement.setString(1, user.getPassword());
 		statement.setString(2, user.getName());
 		statement.setString(3, user.getSurname());
@@ -163,7 +132,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 		
 		connection = ConnectionPool.getInstatce().getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.check_for_uniqueness"));
+		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.check_user_for_uniqueness"));
 		statement.setString(1, login);
 		
 		ResultSet result = statement.executeQuery();
