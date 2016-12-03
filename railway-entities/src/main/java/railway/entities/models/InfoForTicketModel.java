@@ -6,10 +6,10 @@ public class InfoForTicketModel implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	long userId;
-	long trainId;
-	int place;
-	double price;
+	private long userId;
+	private long trainId;
+	private int place;
+	private double price;
 	
 	public InfoForTicketModel(long userId, long trainId, int place, double price) {
 		

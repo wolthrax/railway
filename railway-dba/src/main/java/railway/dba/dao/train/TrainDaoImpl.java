@@ -19,8 +19,17 @@ import railway.utils.props.RailwayProps;
 
 public class TrainDaoImpl extends BaseDaoImpl<Train, Long> implements ITrainDao{
 	
-	public TrainDaoImpl() {
+	private static TrainDaoImpl TrainDaoImpl;
+	
+	private TrainDaoImpl() {
 		super(Train.class);
+	}
+	
+	public static TrainDaoImpl getInstance(){
+		if(TrainDaoImpl == null){
+			TrainDaoImpl = new TrainDaoImpl();
+			return TrainDaoImpl;
+		}else return TrainDaoImpl;
 	}
 
 	@Override

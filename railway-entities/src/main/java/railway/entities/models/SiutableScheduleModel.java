@@ -6,10 +6,10 @@ public class SiutableScheduleModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	String fromTime;
-	String toTime;
-	String depatureStation;
-	String arrivalStation;
+	private String fromTime;
+	private String toTime;
+	private String depatureStation;
+	private String arrivalStation;
 	
 	public SiutableScheduleModel(String fromTime, String toTime, String depatureStation, String arrivalStation) {
 		this.fromTime = fromTime;

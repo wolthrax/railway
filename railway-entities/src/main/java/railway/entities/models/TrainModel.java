@@ -6,12 +6,12 @@ public class TrainModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	String places;
-	String price;
-	String depatureTime;
-	String arrivalTime;
-	String depatureStation;
-	String arrivalStation;
+	private String places;
+	private String price;
+	private String depatureTime;
+	private String arrivalTime;
+	private String depatureStation;
+	private String arrivalStation;
 	
 	public TrainModel(String places, String price, String depatureTime, String arrivalTime, String depatureStation,
 			String arrivalStation) {

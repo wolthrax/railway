@@ -16,8 +16,17 @@ import railway.utils.props.RailwayProps;
 
 public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStationDao{
 	
-	public StationDaoImpl() {
+	public static StationDaoImpl StationDaoImpl;
+	
+	private StationDaoImpl() {
 		super(Station.class);
+	}
+	
+	public static StationDaoImpl getInstance(){
+		if(StationDaoImpl == null){
+			StationDaoImpl = new StationDaoImpl();
+			return StationDaoImpl;
+		} else return StationDaoImpl;
 	}
 	
 	@Override
@@ -69,10 +78,13 @@ public class StationDaoImpl extends BaseDaoImpl<Station, Long> implements IStati
 		PreparedStatement statement = connection.prepareStatement(RailwayProps.getProperty("query.check_station_for_uniqueness"));
 		statement.setString(1, station);
 		
-		ResultSet result = statement.executeQuery();
-		result.next();
+		ResultSet resultSet = statement.executeQuery();
+		resultSet.next();
 		
-		return result.getLong(1);
+		long result = resultSet.getLong(1);
+		
+		ConnectionPool.getInstatce().closeConnection(connection);
+		return result;
 	}
 
 }

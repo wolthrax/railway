@@ -6,8 +6,8 @@ public class Credential implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	String login;
-	String password;
+	private String login;
+	private String password;
 	
 	public Credential(String login, String password) {
 		this.login = login;

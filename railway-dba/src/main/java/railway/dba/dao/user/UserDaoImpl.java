@@ -21,8 +21,17 @@ import railway.utils.props.RailwayProps;
 
 public class UserDaoImpl extends BaseDaoImpl<User, Long> implements IUserDao{
 
-	public UserDaoImpl() {
+	public static UserDaoImpl UserDaoImpl;
+	
+	private UserDaoImpl() {
 		super(User.class);
+	}
+	
+	public static UserDaoImpl getInstance(){
+		if(UserDaoImpl == null){
+			UserDaoImpl = new UserDaoImpl();
+			return UserDaoImpl;
+		} else return UserDaoImpl;
 	}
 	
 	@Override

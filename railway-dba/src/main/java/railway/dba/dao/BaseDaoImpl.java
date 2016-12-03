@@ -7,15 +7,24 @@ import java.util.List;
 
 public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T,PK>{
 	
+	private static BaseDaoImpl<?, ?> BaseDaoImpl;
+	
 	protected Connection connection;
 	
 	@SuppressWarnings("unused")
 	private Class<T> clazz;
 
-	public BaseDaoImpl() {
+	private BaseDaoImpl() {
 		super();
 	}
 
+	public static BaseDaoImpl<?, ?> getInstance(){
+		if(BaseDaoImpl == null){
+			BaseDaoImpl = new BaseDaoImpl<>();
+			return BaseDaoImpl;
+		}else return BaseDaoImpl;
+	}
+	
 	public BaseDaoImpl(Class<T> clazz) {
 		this.clazz = clazz;
 	}

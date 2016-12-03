@@ -20,14 +20,14 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public List<User> getAllUsers() {
 		
-		IBaseDao<User, Long> userDao = new UserDaoImpl();
+		IBaseDao<User, Long> baseDao = UserDaoImpl.getInstance();
 		
 		List<User> userList = null;
 		try {
-			userList = userDao.getAll();
+			userList = baseDao.getAll();
 		} catch (SQLException e) {
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
-			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			ConnectionPool.getInstatce().connectionRollback(baseDao.getConnection());
 		}
 		
 		return userList;
@@ -36,14 +36,14 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public User getUserById(long id) {
 		
-		IBaseDao<User, Long> userDao = new UserDaoImpl();
+		IBaseDao<User, Long> baseDao = UserDaoImpl.getInstance();
 		
 		User user = null;
 		try {
-			user = userDao.get(id);
+			user = baseDao.get(id);
 		} catch (SQLException e) {
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
-			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			ConnectionPool.getInstatce().connectionRollback(baseDao.getConnection());
 		}
 		return user;
 	}
@@ -51,7 +51,7 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public long addUser(UserModel userModel) {
 		
-		IBaseDao<User, Long> userDao = new UserDaoImpl();
+		IBaseDao<User, Long> baseDao = UserDaoImpl.getInstance();
 		
 		User user = new User();
 		user.setLogin(userModel.getLogin());
@@ -64,11 +64,11 @@ public class UserManagerImpl implements IUserManager{
 		user.setMoney(0);
 		
 		try {
-			long id = userDao.add(user);
+			long id = baseDao.add(user);
 			return id;
 		} catch (SQLException e) {
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
-			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			ConnectionPool.getInstatce().connectionRollback(baseDao.getConnection());
 			return -1;
 		}
 	}
@@ -76,10 +76,10 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public byte updateUser(UserModel userModel) {
 		
-		IBaseDao<User, Long> userDao = new UserDaoImpl();
+		IBaseDao<User, Long> baseDao = UserDaoImpl.getInstance();
 		
 		try {
-			User user = userDao.get(userModel.getId());
+			User user = baseDao.get(userModel.getId());
 			if(!userModel.getPassword1().equals(""))
 				user.setPassword(userModel.getPassword1());
 			
@@ -98,11 +98,11 @@ public class UserManagerImpl implements IUserManager{
 			if(!userModel.getMoney().equals(""))
 				user.setMoney(Double.valueOf(userModel.getMoney()));
 			
-			userDao.update(user);
+			baseDao.update(user);
 			return 0;
 		} catch (SQLException e) {
 			RailwayLogger.logError(UserManagerImpl.class, e.getMessage());
-			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			ConnectionPool.getInstatce().connectionRollback(baseDao.getConnection());
 			return -1;
 		}
 		
@@ -111,7 +111,7 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public long checkForUniqueness(String login) {
 		
-		IUserDao userDao = new UserDaoImpl();
+		IUserDao userDao = UserDaoImpl.getInstance();
 		
 		long uniqueness = -1;
 		try {
@@ -127,7 +127,7 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public User authentication(Credential credential) {
 		
-		IUserDao userDao = new UserDaoImpl();
+		IUserDao userDao = UserDaoImpl.getInstance();
 		User user = null;
 		try {
 			user = userDao.authentication(credential);
@@ -142,7 +142,7 @@ public class UserManagerImpl implements IUserManager{
 	@Override
 	public int bookATicket(InfoForTicketModel infoForTicketModel) {
 		
-		IUserDao userDao = new UserDaoImpl();
+		IUserDao userDao = UserDaoImpl.getInstance();
 		
 		try {
 			userDao.bookATicket(infoForTicketModel);
@@ -156,7 +156,7 @@ public class UserManagerImpl implements IUserManager{
 
 	@Override
 	public List<Train> getAllTickets(long userId) {
-		IUserDao userDao = new UserDaoImpl();
+		IUserDao userDao = UserDaoImpl.getInstance();
 		
 		List<Train> trainList = null;
 		

@@ -3,7 +3,6 @@ package railway.services.station;
 import java.sql.SQLException;
 import java.util.List;
 
-import railway.dba.dao.IBaseDao;
 import railway.dba.dao.station.IStationDao;
 import railway.dba.dao.station.StationDaoImpl;
 import railway.dba.utils.ConnectionPool;
@@ -12,7 +11,7 @@ import railway.utils.logger.RailwayLogger;
 
 public class StationManagerImpl implements IStationManager{
 	
-	private IBaseDao<Station, Long> stationDao = new StationDaoImpl();
+	private IStationDao stationDao = StationDaoImpl.getInstance();
 
 	@Override
 	public long addStation(Station station) {
@@ -44,14 +43,13 @@ public class StationManagerImpl implements IStationManager{
 
 	@Override
 	public long checkForUniqueness(String station) {
-		IStationDao userDao = new StationDaoImpl();
 		
 		long uniqueness = -1;
 		try {
-			uniqueness = userDao.checkForUniqueness(station);
+			uniqueness = stationDao.checkForUniqueness(station);
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
-			ConnectionPool.getInstatce().connectionRollback(userDao.getConnection());
+			ConnectionPool.getInstatce().connectionRollback(stationDao.getConnection());
 		}
 		return uniqueness;
 	}

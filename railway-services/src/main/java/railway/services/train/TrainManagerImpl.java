@@ -16,10 +16,12 @@ import railway.utils.logger.RailwayLogger;
 
 public class TrainManagerImpl implements ITrainManager{
 
+	private ITrainDao trainDao = TrainDaoImpl.getInstance();
+	
 	@Override
 	public long addTrain(TrainModel trainModel) {
 		
-		IBaseDao<Train, Long> trainDao = new TrainDaoImpl();
+		IBaseDao<Train, Long> baseDao = TrainDaoImpl.getInstance();
 		
 		Schedule schedule = new Schedule();
 		schedule.setDepatureTime(trainModel.getDepatureTime());
@@ -33,7 +35,7 @@ public class TrainManagerImpl implements ITrainManager{
 		train.setSchedule(schedule);
 		
 		try {
-			return trainDao.add(train);
+			return baseDao.add(train);
 		} catch (SQLException e) {
 			RailwayLogger.logError(getClass(), e.getMessage());
 			ConnectionPool.getInstatce().connectionRollback(trainDao.getConnection());
@@ -43,7 +45,6 @@ public class TrainManagerImpl implements ITrainManager{
 
 	@Override
 	public List<Train> getSiutableTrains(SiutableScheduleModel model) {
-		ITrainDao trainDao = new TrainDaoImpl();
 		
 		List<Train> siutableTrainList = null;
 		try {
@@ -57,8 +58,6 @@ public class TrainManagerImpl implements ITrainManager{
 
 	@Override
 	public List<User> getPassengers(long trainId) {
-
-		ITrainDao trainDao = new TrainDaoImpl();
 		
 		List<User> userList = null;
 		try {
@@ -73,8 +72,6 @@ public class TrainManagerImpl implements ITrainManager{
 
 	@Override
 	public void deleteTrains() {
-		
-		ITrainDao trainDao = new TrainDaoImpl();
 		
 		try {
 			trainDao.deleteTrains();

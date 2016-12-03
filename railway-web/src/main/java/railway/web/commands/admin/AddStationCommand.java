@@ -19,7 +19,7 @@ public class AddStationCommand extends AbstractCommand{
 		IStationManager stationManager = new StationManagerImpl();
 		
 		long uniqueStationName = stationManager.checkForUniqueness(request.getParameter("station"));
-		
+		System.out.println("************" + uniqueStationName);
 		if(uniqueStationName == 0){
 			Station station = new Station();
 			station.setName(request.getParameter("station"));

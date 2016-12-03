@@ -6,15 +6,15 @@ public class UserModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	long id;
-	String login;
-	String password1;
-	String password2;
-	String name;
-	String surname;
-	String email;
-	String phone;
-	String money;
+	private long id;
+	private String login;
+	private String password1;
+	private String password2;
+	private String name;
+	private String surname;
+	private String email;
+	private String phone;
+	private String money;
 	
 	public UserModel(long id, String login, String password1, String password2, String name, String surname, 
 			String email, String phone, String money) {
